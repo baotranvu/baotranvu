@@ -31,7 +31,7 @@ namespace ServerLib
         private byte[] dataStream;
 
         //List of clients
-        private ArrayList clientList;
+        
 
         // Status delegate
         private delegate void UpdateStatusDelegate(string satus,object sender,EventArgs e);
@@ -46,21 +46,16 @@ namespace ServerLib
         private SQLiteConnection sqlite_conn;
 
         //Struct to store client info
-        private struct Client
-        {
-            public EndPoint endPoint;
-            public string name;
-            public string password;
-        }
+        private ClientList<Client> clientList = new ClientList<Client>();
         #endregion
 
-        #region Constructor
-        public ArrayList ClientList
+
+        #region
+        public ClientList<Client> ClientsList
         {
             get { return clientList; }
             set { clientList = value; }
         }
-        
         public void Init()
         {
             try
@@ -68,7 +63,7 @@ namespace ServerLib
                 log = "Listening";
                 conn = new Connection();
                 sqlite_conn = conn.CreateConnect();
-                clientList = new ArrayList();
+                
                 dataStream = new byte[1024];
                 updateStatus = new UpdateStatusDelegate(UpdateStatus);
                 updateLog = new UpdateLogDelegate(UpdateLog);
@@ -84,7 +79,7 @@ namespace ServerLib
             {
                 XtraMessageBox.Show(string.Format("Error:{0}",e.Message));
                 log = string.Format("Error:{0}", e.Message);
-                serverSocket.Close();
+                
             }
 
         }
@@ -127,15 +122,15 @@ namespace ServerLib
                         Client register = new Client();
                         register.endPoint = (EndPoint)epSender;
                         Packet RegPacket = new Packet(dataStream);
-                        register.name = RegPacket.Sender;
-                        register.password = RegPacket.Message;
-                        bool isReg = conn.Register(register.name,register.password);
+                        register.Name = RegPacket.Sender;
+                        register.Pass = RegPacket.Message;
+                        bool isReg = conn.Register(register.Name,register.Pass);
                         if(isReg)
                         {
                           
                             Packet reg = new Packet();
                             
-                            reg.Sender = register.name;
+                            reg.Sender = register.Name;
                             reg.Receiver = null;
                             reg.dataIdentifier = DataIdentifier.Register;
                             byte[] RegResponse = reg.GetDataStream();
@@ -151,18 +146,17 @@ namespace ServerLib
                         Client client = new Client();
                         client.endPoint = (EndPoint)epSender;
                         Packet login = new Packet(dataStream);
-                        client.name = login.Sender;
-                        client.password = login.Message;
-                        bool isValid = conn.CheckLogin(client.name,client.password);
+                        client.Name = login.Sender;
+                        client.Pass = login.Message;
+                        bool isValid = conn.CheckLogin(client.Name,client.Pass);
                         if(isValid)
                         {
-                            this.clientList.Add(client);
-                            sendData.Message = string.Format("-- {0} is online --", client.name);
-                            log = string.Format("-- {0} is online --", client.name);
+                            clientList.Add(client);
+                            log = string.Format("-- {0} is online --", client.Name);
                             Packet pack = new Packet();
                             pack.dataIdentifier = DataIdentifier.LogIn;
                             pack.Sender = sendData.Sender;
-                            pack.Message = null;
+                            pack.Message = log;
                             byte[] response = pack.GetDataStream();
                             serverSocket.BeginSendTo(response, 0, response.Length, SocketFlags.None, client.endPoint, new AsyncCallback(SendCallback),client.endPoint);
                         }
@@ -242,6 +236,19 @@ namespace ServerLib
         {
             ListBox list = (ListBox)sender;
             list.Items.Add(string.Format("{0}: {1}",DateTime.Now.ToString(),log));
+        }
+        public IPAddress getIP()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    XtraMessageBox.Show(ip.ToString());
+                    return ip;
+                }
+            }
+            return null;
         }
         #endregion
 

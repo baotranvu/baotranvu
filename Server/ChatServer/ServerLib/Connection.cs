@@ -1,5 +1,6 @@
 ﻿using System;
 using DevExpress.XtraEditors;
+using System.Windows.Forms;
 using System.Data.SQLite;
 
 
@@ -8,13 +9,14 @@ namespace ServerLib
     public class Connection
     {
         public SQLiteConnection sqlite_conn;
-
+        private const string batch = @".\sqlite\Database.db";
         public SQLiteConnection CreateConnect()
         {
 
             // Create a new database connection:
-            string cs = @"URI=file:C:\Users\USER.LAPTOP-3IKEQ1HT\Desktop\Demo\SocketUdp\sqlite\Database.db";
-            sqlite_conn = new SQLiteConnection(cs);
+
+            string sql =string.Format("URI=file:{0}",System.IO.Path.GetFullPath(batch));
+            sqlite_conn = new SQLiteConnection(sql);
             //sqlite_conn = new SQLiteConnection("Data Source = Database.db; Version = 3; New =False; Compress= true ");
          // Open the connection:
          try
@@ -23,8 +25,9 @@ namespace ServerLib
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show("Unexpected error!");
+                XtraMessageBox.Show(string.Format("Unexpected error! Error:{0}",ex));
                 sqlite_conn.Close();
+                Application.Exit();
             }
             return sqlite_conn;
         }

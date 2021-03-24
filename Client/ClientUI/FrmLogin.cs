@@ -20,7 +20,7 @@ namespace ClientUI
         public string svIP;
         public FrmLogin()
         {
-           
+            CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
             if (svIP != string.Empty)
             { IP.Text = svIP; }
@@ -62,17 +62,16 @@ namespace ClientUI
                 string user = User_txt.Text;
                 string pass = Pass_txt.Text;
                 socket.Login(user, pass);
-                
+                socket.CloseForm(this);
+                socket.DisplayForm(new FrmMenu());
             }
             else
             {
                 XtraMessageBox.Show("server IP is empty");
             }
-            if (socket.IsLogedin)
-            {
-                socket.CloseForm(this);
-                socket.DisplayForm(new FrmMain());
-            }
+           
+               
+            
         }
 
 

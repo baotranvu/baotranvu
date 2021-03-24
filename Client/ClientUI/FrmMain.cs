@@ -19,7 +19,7 @@ namespace ClientUI
             if (InputEdit.Text != string.Empty)
             {
                // socket.Send(InputEdit.Text,null);
-                socket.DisplayMessage(socket.LogMess,Chat_box,e);
+                socket.DisplayMessage(socket.LogMess,Chat_box);
                 InputEdit.Clear();
             }
 

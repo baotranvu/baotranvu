@@ -23,7 +23,7 @@ namespace ClientUI
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
             Register_btn.Click += new EventHandler(Register_btn_Click);
-            //this.FormClosing += new FormClosingEventHandler(close);
+            
             
             
         }
@@ -34,20 +34,14 @@ namespace ClientUI
                 string user = User_txt.Text;
                 string pass = Pass_txt.Text;
                 socket.Register(user, pass);
-            }
-            if (socket.IsRegistered)
-            {
                 socket.CloseForm(this);
                 socket.DisplayForm(new FrmLogin());
             }
+            
 
         }
-        private void close(object sender, FormClosingEventArgs e)
-        {
-            socket.CloseForm(this);
-            socket.DisplayForm(new FrmLogin());
-        }
         
+       
         
     }
 }

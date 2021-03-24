@@ -32,7 +32,7 @@ namespace ClientLib
         private IPEndPoint server;
 
         //Display message
-        private delegate void DisplayMessageDelegate(string msg,object sender,EventArgs e);
+        private delegate void DisplayMessageDelegate(string msg,object sender);
         private DisplayMessageDelegate displayMessageDelegate = null;
 
         private bool isLogedin;
@@ -140,15 +140,14 @@ namespace ClientLib
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 server = new IPEndPoint(serverIP, PORT_NUM);
                 epServer = (EndPoint)server;
-                XtraMessageBox.Show(string.Format("Connected to:{0}",server.ToString()));
-              
+                
             }
             catch(Exception e)
             {
                 XtraMessageBox.Show(string.Format("Can not connect to server!, Error:{0}",e.Message));
               
             }
-
+            XtraMessageBox.Show(string.Format("Connected to:{0}", server.ToString()));
         }
         public void Send(string mess,string recv)
         {
@@ -243,7 +242,7 @@ namespace ClientLib
             }
            
         }
-        public void DisplayMessage(string mess, object sender, EventArgs e)
+        public void DisplayMessage(string mess, object sender)
         {
             ListBox list = (ListBox)sender;
             list.Items.Add(string.Format("{0}: {1}", DateTime.Now.ToString(), mess));
@@ -262,6 +261,7 @@ namespace ClientLib
             form.Hide();
             form.Close();
         }
+        
         #endregion
     }
 }

@@ -32,15 +32,16 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.client_grid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.NameCol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.FuncBar = new DevExpress.XtraBars.Navigation.TileNavPane();
             this.ShutDown_btn = new DevExpress.XtraBars.Navigation.NavButton();
             this.Start_btn = new DevExpress.XtraBars.Navigation.NavButton();
+            this.Close_btn = new DevExpress.XtraBars.Navigation.NavButton();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.Status = new DevExpress.XtraEditors.TextEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.log_box = new System.Windows.Forms.ListBox();
-            this.Close_btn = new DevExpress.XtraBars.Navigation.NavButton();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.client_grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -85,8 +86,18 @@
             // 
             // gridView1
             // 
+            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.NameCol});
             this.gridView1.GridControl = this.client_grid;
             this.gridView1.Name = "gridView1";
+            // 
+            // NameCol
+            // 
+            this.NameCol.FieldName = "Name";
+            this.NameCol.Name = "NameCol";
+            this.NameCol.Visible = true;
+            this.NameCol.VisibleIndex = 0;
+            this.NameCol.Width = 111;
             // 
             // FuncBar
             // 
@@ -119,6 +130,13 @@
             this.Start_btn.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
             this.Start_btn.Caption = "Start";
             this.Start_btn.Name = "Start_btn";
+            // 
+            // Close_btn
+            // 
+            this.Close_btn.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.Close_btn.Caption = null;
+            this.Close_btn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("Close_btn.ImageOptions.Image")));
+            this.Close_btn.Name = "Close_btn";
             // 
             // layoutControl1
             // 
@@ -173,12 +191,6 @@
             this.log_box.Size = new System.Drawing.Size(392, 384);
             this.log_box.TabIndex = 4;
             // 
-            // Close_btn
-            // 
-            this.Close_btn.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.Close_btn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("Close_btn.ImageOptions.Image")));
-            this.Close_btn.Name = "Close_btn";
-            // 
             // serverUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -217,5 +229,6 @@
         private DevExpress.XtraBars.Navigation.NavButton Start_btn;
         private System.Windows.Forms.ListBox log_box;
         private DevExpress.XtraBars.Navigation.NavButton Close_btn;
+        private DevExpress.XtraGrid.Columns.GridColumn NameCol;
     }
 }

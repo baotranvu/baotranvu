@@ -11,6 +11,7 @@ using DevExpress.XtraEditors;
 using ServerLib;
 using System.Data.SQLite;
 using DevExpress.XtraBars.Navigation;
+using ExtendClass;
 
 namespace ServerUI
 {
@@ -18,6 +19,7 @@ namespace ServerUI
     {
         ServerSocket serverSocket = new ServerSocket();
         bool isInit = false;
+        ClientList<Client> clients;
         public serverUI()
         {
            
@@ -27,6 +29,10 @@ namespace ServerUI
             FormClosing += new FormClosingEventHandler(Form_close);
             Start_btn.ElementClick += new NavElementClickEventHandler(Form_Load);
             Close_btn.ElementClick += new NavElementClickEventHandler(Form_close);
+            clients = serverSocket.ClientsList;
+            clients.ClientAddedHandler += new EventHandler(ClientConnect);
+            CheckForIllegalCrossThreadCalls = false;
+            
 
         }
         private void Form_Load(object sender, EventArgs e)
@@ -40,10 +46,11 @@ namespace ServerUI
             else
             {
                 XtraMessageBox.Show("Server already opended!");
-                isInit = false;
+                
             }
             serverSocket.UpdateLog(serverSocket.Log, log_box, e);
-            client_grid.DataSource = serverSocket.ClientList;
+            
+            
             
 
         }
@@ -60,6 +67,11 @@ namespace ServerUI
             Dispose();
             Close();
 
+        }
+        private void ClientConnect(object sender,EventArgs e)
+        {
+            client_grid.DataSource = clients;
+            
         }
     }
 }
