@@ -17,16 +17,6 @@ I am a Backend Developer passionate about building high-performance, secure, and
 
 ---
 
-### 📊 GitHub Stats
-
-<p align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=baotranvu&show_icons=true&theme=tokyonight&count_private=true" alt="Bao's GitHub Stats" height="155" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=baotranvu&layout=compact&theme=tokyonight&langs_count=6" alt="Bao's Top Languages" height="155" />
-</p>
-
----
-
 ### 📫 Connect with me:
-*   **Email**: [Your business email here]
-*   **LinkedIn**: [Your LinkedIn URL here]
+*   **Email**: [your.email@example.com]
 *   **Location**: Ho Chi Minh City, Vietnam
