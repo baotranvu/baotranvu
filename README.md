@@ -18,5 +18,5 @@ I am a Backend Developer passionate about building high-performance, secure, and
 ---
 
 ### 📫 Connect with me:
-*   **Email**: [your.email@example.com]
+*   **Email**: tranvubao195@gmail.com
 *   **Location**: Ho Chi Minh City, Vietnam
